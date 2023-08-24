@@ -1,0 +1,19 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is up to date with 'origin/master'.
+#
+# Changes to be committed:
+#	deleted:    PedroAndriola/web-go/cmd
+#	deleted:    PedroAndriola/web-go/controllers/produtos.go
+#	deleted:    PedroAndriola/web-go/db/db.go
+#	deleted:    PedroAndriola/web-go/models/produtos.go
+#	deleted:    PedroAndriola/web-go/routes/routes.go
+#	deleted:    PedroAndriola/web-go/templates/_head.html
+#	deleted:    PedroAndriola/web-go/templates/_menu.html
+#	deleted:    PedroAndriola/web-go/templates/edit.html
+#	deleted:    PedroAndriola/web-go/templates/index.html
+#	deleted:    PedroAndriola/web-go/templates/new.html
+#
