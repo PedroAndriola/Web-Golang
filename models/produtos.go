@@ -11,9 +11,9 @@ type Produto struct {
 }
 
 func BuscaTodosOsProdutos() []Produto {
-	db := db.ConectaComBancoDeDados()
+	db.ConectaComBancoDeDados()
 
-	selectDeTodosOsProdutos, err := db.Query("select * from produtos")
+	selectDeTodosOsProdutos, err := db.DB.Query("select * from produtos")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -39,39 +39,38 @@ func BuscaTodosOsProdutos() []Produto {
 
 		produtos = append(produtos, p)
 	}
-	defer db.Close()
+	defer db.DB.Close()
 	return produtos
 }
-func CriaNovoProduto(nome, descricao string, preco float64, quantidade int) {
-	db := db.ConectaComBancoDeDados()
 
-	insereDadosNoBanco, err := db.Prepare("insert into produtos(nome, descricao, preco, quantidade) values($1, $2, $3, $4)")
+func CriaNovoProduto(nome, descricao string, preco float64, quantidade int) {
+	db.ConectaComBancoDeDados()
+
+	insereDadosNoBanco, err := db.DB.Prepare("insert into produtos(nome, descricao, preco, quantidade) values($1, $2, $3, $4)")
 	if err != nil {
 		panic(err.Error())
 	}
 
 	insereDadosNoBanco.Exec(nome, descricao, preco, quantidade)
-	defer db.Close()
-
+	defer db.DB.Close()
 }
 
 func DeletaProduto(id string) {
-	db := db.ConectaComBancoDeDados()
+	db.ConectaComBancoDeDados()
 
-	deletarOProduto, err := db.Prepare("delete from produtos where id=$1")
+	deletarOProduto, err := db.DB.Prepare("delete from produtos where id=$1")
 	if err != nil {
 		panic(err.Error())
 	}
 
 	deletarOProduto.Exec(id)
-	defer db.Close()
-
+	defer db.DB.Close()
 }
 
 func EditaProduto(id string) Produto {
-	db := db.ConectaComBancoDeDados()
+	db.ConectaComBancoDeDados()
 
-	produtoDoBanco, err := db.Query("select * from produtos where id=$1", id)
+	produtoDoBanco, err := db.DB.Query("select * from produtos where id=$1", id)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -93,17 +92,18 @@ func EditaProduto(id string) Produto {
 		produtoParaAtualizar.Preco = preco
 		produtoParaAtualizar.Quantidade = quantidade
 	}
-	defer db.Close()
+	defer db.DB.Close()
 	return produtoParaAtualizar
 }
 
 func AtualizaProduto(id int, nome, descricao string, preco float64, quantidade int) {
-	db := db.ConectaComBancoDeDados()
+	db.ConectaComBancoDeDados()
 
-	AtualizaProduto, err := db.Prepare("update produtos set nome=$1, descricao=$2, preco=$3, quantidade=$4 where id=$5")
+	AtualizaProduto, err := db.DB.Prepare("update produtos set nome=$1, descricao=$2, preco=$3, quantidade=$4 where id=$5")
 	if err != nil {
 		panic(err.Error())
 	}
 	AtualizaProduto.Exec(nome, descricao, preco, quantidade, id)
-	defer db.Close()
+	defer db.DB.Close()
 }
+
